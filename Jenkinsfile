@@ -1,5 +1,10 @@
 pipeline {
-    agent { docker { image 'node:16' } } 
+    agent {
+        docker { 
+            image 'node:16'
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // Enable Docker-in-Docker
+        }
+    }
 
     environment {
         dockerHome = tool 'MyDocker'
