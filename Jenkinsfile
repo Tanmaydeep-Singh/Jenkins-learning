@@ -10,27 +10,31 @@ pipeline {
     // Defines environment variables used in the pipeline
     environment {
         dockerHome = tool 'MyDocker'  // Jenkins tool named "MyDocker" is configured and its path is set to dockerHome.
-        mavenHome = tool 'MyMaven'    // Jenkins tool named "MyMaven" is configured and its path is set to mavenHome.
-        PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"  // Updates the PATH environment variable to include Docker and Maven.
+        PATH = "$dockerHome/bin$PATH"  // Updates the PATH environment variable to include Docker and Maven.
     }
 
     stages {  // Defines the stages of the pipeline.
-        stage('Checkout') {  // A stage named "Checkout".
+            stage('Checkout') {  // A stage named "Checkout".
             steps {  // The specific steps to be executed in this stage.
-                sh 'mvn --version'  // Prints the Maven version to the console output.
-                sh 'docker version'  // Prints the Docker version to the console output.
-                echo "Checkout"  // Prints "Checkout" to the console output.
+                sh 'node -v'  // Prints the Node.js version to the console output.
+                sh 'npm -v'   // Prints the npm version to the console output.
+                echo "Checkout"
             }
         }
-        stage('Compile') {  // A stage named "Compile".
+        stage('Install Dependencies') {  // A stage named "Install Dependencies".
             steps {  // The specific steps to be executed in this stage.
-                sh "mvn clean compile"  // Runs Maven's clean and compile commands.
+                sh 'npm install'  // Installs Node.js dependencies from package.json.
+            }
+        }
+        stage('Build') {  // A stage named "Build".
+            steps {  // The specific steps to be executed in this stage.
+                sh 'npm run build'  // Runs the build script defined in package.json (if applicable).
             }
         }
         stage('Test') {  // A stage named "Test".
             steps {  // The specific steps to be executed in this stage.
-                sh "mvn test"  // Runs Maven's test command.
-                echo "Test"  // Prints "Test" to the console output.
+                sh 'npm test'  // Runs the test script defined in package.json.
+                echo "Test"
             }
         }
     }
