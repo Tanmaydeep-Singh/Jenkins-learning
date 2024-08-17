@@ -29,15 +29,15 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', '07b7537e-2932-436c-8573-81aa3cab957e') {
-                        docker.image(dockerImage).push('latest')
-                    }
-                }
-            }
-        }
+        // stage('Push Docker Image') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('https://registry.hub.docker.com', '07b7537e-2932-436c-8573-81aa3cab957e') {
+        //                 docker.image(dockerImage).push('latest')
+        //             }
+        //         }
+        //     }
+        // }
         stage('Deploy') {
             steps {
                 // Deploy steps here, e.g., Kubernetes, Docker Swarm, etc.
