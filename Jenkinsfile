@@ -1,7 +1,17 @@
 pipeline {
-    agent any
+     agent { docker { image 'node:13.8' } }
+
+    environment {
+        dockerHome = tool name: 'MyDocker'
+        PATH = "${dockerHome}/bin:${env.PATH}"
+    }
 
     stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+            }
+        }
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
