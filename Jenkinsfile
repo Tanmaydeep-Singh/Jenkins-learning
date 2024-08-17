@@ -14,7 +14,7 @@ pipeline{
         {
             steps{
                 sh 'mvn --version'
-                sh 'docker --version'
+                sh 'docker version'
                 echo "Build"
             }
         }
