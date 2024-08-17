@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+     agent {
+        docker {
+            image 'node:16' 
+        }
+     }
 
     environment {
         dockerHome = tool 'MyDocker'
