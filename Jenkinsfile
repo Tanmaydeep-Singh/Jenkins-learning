@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+      agent {
+        docker {
+            image 'node:16'
+        }
+    }
 
     environment {
         // Update the Docker home and PATH variables if needed
@@ -12,6 +16,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker version'
+                    sh 'node --version'
                 }
             }
         }
