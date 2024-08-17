@@ -1,12 +1,8 @@
 pipeline {
-    agent {
-        docker { 
-            image 'node:16'
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Enable Docker-in-Docker
-        }
-    }
+    agent any
 
     environment {
+        // Update the Docker home and PATH variables if needed
         dockerHome = tool 'MyDocker'
         PATH = "${dockerHome}/bin:${env.PATH}"
     }
@@ -14,44 +10,60 @@ pipeline {
     stages {
         stage('Check Docker') {
             steps {
-                sh 'docker version'
+                script {
+                    sh 'docker version'
+                }
             }
         }
+
         stage('Checkout') {
             steps {
                 echo 'Checking out code...'
+                checkout scm
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                script {
+                    sh 'npm install'
+                }
             }
         }
+
         stage('Run Tests') {
             steps {
                 echo 'No tests defined for now'
+                // Replace with actual test command when tests are added
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Build Docker image and tag it
                     dockerImage = docker.build('tanmaydeep/jankinstest:latest')
+                    echo 'Docker image built'
                 }
-                echo 'Docker image built'
             }
         }
+
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    // Push Docker image to Docker Hub
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                         dockerImage.push('latest')
                     }
+                    echo 'Docker image pushed'
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
+                // Add deployment steps here
             }
         }
     }
