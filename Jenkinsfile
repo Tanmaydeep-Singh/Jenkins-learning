@@ -1,7 +1,8 @@
 pipeline {
-    agent {
+     agent {
         docker {
-            image 'node:14' 
+            image 'docker:20.10-dind' // Docker-in-Docker image
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket
         }
     }
 
@@ -9,14 +10,14 @@ pipeline {
         stage('Check Version') {
             steps {
                 script {
-                    sh 'node --version' 
-                    // Docker command should be available if Docker is installed on the Jenkins agent
-                    sh 'docker version' 
+                    // Run Docker commands inside the Docker container
+                    sh 'docker --version'
+                    sh 'node --version'
                 }
             }
         }
-    }
-}
+    }}
+    
 
 
 // WORKING VERSION
