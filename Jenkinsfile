@@ -2,14 +2,14 @@ pipeline {
     agent { docker { image 'node:16' } } 
 
     environment {
-        dockerHome = tool name: 'MyDocker'
+        dockerHome = tool 'MyDocker'
         PATH = "${dockerHome}/bin:${env.PATH}"
     }
 
     stages {
         stage('Check Docker') {
             steps {
-                sh 'docker --version'
+                sh 'docker version'
             }
         }
         stage('Checkout') {
