@@ -1,10 +1,7 @@
 pipeline {
-     agent {
-        docker {
-            image 'docker:20.10-dind' // Docker-in-Docker image
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket
-        }
-    }
+     agent any
+
+     tools {nodejs "node"}
 
     stages {
         stage('Check Version') {
@@ -17,7 +14,7 @@ pipeline {
             }
         }
     }}
-    
+
 
 
 // WORKING VERSION
