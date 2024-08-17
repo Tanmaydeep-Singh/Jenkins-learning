@@ -1,15 +1,16 @@
 pipeline {
-    agent { docker {image 'node:13.8'} }
+    agent { docker { image 'node:13.8' } }
 
     environment {
         dockerHome = tool name: 'MyDocker', type: 'DockerTool'
-        PATH = "$dockerHome/bin:$PATH"
+        PATH = "${dockerHome}/bin:${env.PATH}"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                echo 'checkout'
+                echo 'Checking out code...'
+                // Add a checkout step if needed, e.g., git checkout
             }
         }
         stage('Install Dependencies') {
@@ -20,44 +21,41 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'node --version'
-                echo "No build step defined"
+                echo 'No build step defined'
             }
         }
         stage('Test') {
             steps {
-                echo "No tests defined"
+                echo 'No tests defined'
             }
         }
-        stage('Build Docker Image')
-        {
+        stage('Build Docker Image') {
             steps {
                 script {
                     dockerImage = docker.build("tanmaydeep/test:latest")
                 }
             }
         }
-        stage('Push Docker Image')
-        {
-            steps{
-                script{
-                    docker.withRegistry('', '07b7537e-2932-436c-8573-81aa3cab957e'){
-                    dockerImage.push();
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('', '07b7537e-2932-436c-8573-81aa3cab957e') {
+                        dockerImage.push('latest')
                     }
                 }
-
             }
         }
     }
 
     post {
         always {
-            echo "Pipeline completed"
+            echo 'Pipeline completed'
         }
         success {
-            echo "Build and run successful"
+            echo 'Build and run successful'
         }
         failure {
-            echo "Build or run failed"
+            echo 'Build or run failed'
         }
     }
 }
