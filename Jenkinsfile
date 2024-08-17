@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     sh 'node --version'
-                    sh 'docker version'
+                    // sh 'docker version'
 
                 }
             }
@@ -44,27 +44,27 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build Docker image and tag it
-                    dockerImage = docker.build('tanmaydeep/jankinstest:latest')
-                    echo 'Docker image built'
-                }
-            }
-        }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             // Build Docker image and tag it
+        //             dockerImage = docker.build('tanmaydeep/jankinstest:latest')
+        //             echo 'Docker image built'
+        //         }
+        //     }
+        // }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    // Push Docker image to Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        dockerImage.push('latest')
-                    }
-                    echo 'Docker image pushed'
-                }
-            }
-        }
+        // stage('Push Docker Image') {
+        //     steps {
+        //         script {
+        //             // Push Docker image to Docker Hub
+        //             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+        //                 dockerImage.push('latest')
+        //             }
+        //             echo 'Docker image pushed'
+        //         }
+        //     }
+         }
 
         stage('Deploy') {
             steps {
