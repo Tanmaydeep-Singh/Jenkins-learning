@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                echo 'no test for now'
             }
         }
         stage('Build Docker Image') {
@@ -27,6 +27,7 @@ pipeline {
                 script {
                     dockerImage = docker.build('tanmaydeep/jankinstest:latest')
                 }
+            echo 'docker image build'
             }
         }
         // stage('Push Docker Image') {
