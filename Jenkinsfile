@@ -1,21 +1,17 @@
 pipeline {
-     agent {
+    agent {
         docker {
-            image 'node:16' 
+            image 'node:14' 
         }
-     }
-
-    environment {
-        dockerHome = tool 'MyDocker'
-        PATH = "${dockerHome}/bin:${env.PATH}"
     }
 
     stages {
         stage('Check Version') {
             steps {
                 script {
-                    sh 'docker version'
-                    sh 'node --version'
+                    sh 'node --version' 
+                    // Docker command should be available if Docker is installed on the Jenkins agent
+                    sh 'docker version' 
                 }
             }
         }
