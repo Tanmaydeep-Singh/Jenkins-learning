@@ -1,17 +1,22 @@
 pipeline {
-    agent any 
+    agent any
 
-    tools {
-        nodejs 'node' 
+    environment {
+         node = tool 'node'
+         PATH = "${nodejs}/bin:${env.PATH}"
+
     }
+   
 
     stages {
         stage('Check Version') {
             steps {
                 script {
-                   
-                    sh 'docker --version'
+                    // Check Node.js version
                     sh 'node --version'
+                    
+                    // Check Docker version (ensure Docker is installed on Jenkins agent)
+                    sh 'docker --version'
                 }
             }
         }
