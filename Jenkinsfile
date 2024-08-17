@@ -1,19 +1,22 @@
 pipeline {
-     agent any
+    agent any 
 
-     tools {nodejs "node"}
+    tools {
+        nodejs 'node' 
+    }
 
     stages {
         stage('Check Version') {
             steps {
                 script {
-                    // Run Docker commands inside the Docker container
+                   
                     sh 'docker --version'
                     sh 'node --version'
                 }
             }
         }
-    }}
+    }
+}
 
 
 
