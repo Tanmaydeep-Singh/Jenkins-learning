@@ -1,5 +1,5 @@
 pipeline {
-     agent { docker { image 'node:13.8' } }
+     agent any
 
     environment {
         dockerHome = tool name: 'MyDocker'
@@ -33,7 +33,7 @@ pipeline {
         // stage('Push Docker Image') {
         //     steps {
         //         script {
-        //             docker.withRegistry('https://registry.hub.docker.com', '07b7537e-2932-436c-8573-81aa3cab957e') {
+        //             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
         //                 docker.image(dockerImage).push('latest')
         //             }
         //         }
