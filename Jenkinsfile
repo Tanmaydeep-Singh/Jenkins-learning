@@ -18,8 +18,47 @@ pipeline {
                 }
             }
         }
+
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                echo 'No tests defined for now'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Build and deployment successful'
+        }
+        failure {
+            echo 'Build or deployment failed'
+        }
     }
 }
+
 
 
 
