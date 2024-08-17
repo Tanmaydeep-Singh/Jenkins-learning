@@ -29,7 +29,7 @@ pipeline {
         //         }
         //     echo 'docker image build'
         //     }
-        }
+        // }
         // stage('Push Docker Image') {
         //     steps {
         //         script {
