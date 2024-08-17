@@ -1,32 +1,26 @@
 pipeline {
-    agent any
+    agent { docker {image 'node:13.8'} }
 
     stages {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
-                checkout scm
+                echo 'checkout'
             }
         }
         stage('Install Dependencies') {
             steps {
-                // Install Node.js dependencies
                 sh 'npm install'
             }
         }
         stage('Build') {
             steps {
                 // The provided script doesn't include a build step, but if needed, you can add it here
+                sh 'node --version'
                 echo "No build step defined"
             }
         }
-        stage('Run Application') {
-            steps {
-                // Start the application
-                sh 'node app.js &'
-            }
-        }
-        stage('Test') {
+            stage('Test') {
             steps {
                 // Run tests if any are defined
                 echo "No tests defined"
