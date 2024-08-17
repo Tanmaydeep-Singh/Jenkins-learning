@@ -39,11 +39,29 @@ pipeline {
                 echo 'No tests defined for now'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("tanmaydeep/jenkins-larning:latest")
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('', 'dockerhub') {
+                        dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+    }
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
             }
         }
+        
     }
 
     post {
