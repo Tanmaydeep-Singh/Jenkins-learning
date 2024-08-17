@@ -64,7 +64,7 @@ pipeline {
         //             echo 'Docker image pushed'
         //         }
         //     }
-         }
+        //  }
 
         stage('Deploy') {
             steps {
