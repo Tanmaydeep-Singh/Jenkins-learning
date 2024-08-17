@@ -1,5 +1,5 @@
 pipeline {
-     agent any
+     agent { docker { image 'node:13.8' } }
 
     environment {
         dockerHome = tool name: 'MyDocker'
@@ -22,13 +22,13 @@ pipeline {
                 echo 'no test for now'
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    dockerImage = docker.build('tanmaydeep/jankinstest:latest')
-                }
-            echo 'docker image build'
-            }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             dockerImage = docker.build('tanmaydeep/jankinstest:latest')
+        //         }
+        //     echo 'docker image build'
+        //     }
         }
         // stage('Push Docker Image') {
         //     steps {
